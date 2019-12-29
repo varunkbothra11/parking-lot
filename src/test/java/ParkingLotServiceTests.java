@@ -1,25 +1,29 @@
 import enums.Command;
-import javafx.util.Pair;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import services.ParkingLotService;
+import services.logger.BlackHoleLogger;
+import services.logger.ILogger;
 
+import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 
-public class ParkingLotTests {
-    private static ParkingLot parkingLot;
+public class ParkingLotServiceTests {
+    private static ParkingLotService parkingLotService;
 
     @BeforeAll
     public static void testSetup() {
-        parkingLot = ParkingLot.getInstance();
+        ILogger log = new BlackHoleLogger();
+        parkingLotService = new ParkingLotService(log);
     }
 
     @Test
-    public void executeFileTest() {
+    public void executeFileTest() throws FileNotFoundException {
         String resourceName = "file_test_inputs1.txt";
         String filePath = getClass().getResource(resourceName).getPath();
-        final List<String> actualResult = parkingLot.executeFile(filePath);
+        final List<String> actualResult = parkingLotService.executeFile(filePath);
         final List<String> expectedResult = getExpectedResult();
 
         Assertions.assertEquals(expectedResult.size(), actualResult.size());
@@ -30,10 +34,10 @@ public class ParkingLotTests {
     }
 
     @Test
-    public void executeCommandTest() {
+    public void executeCommandTest() throws Exception {
         List<CommandModel> commandModels = getCommandModels();
-        for (CommandModel commandModel: commandModels) {
-            String actualResult = parkingLot.executeCommand(commandModel.getCommand(), commandModel.getInput());
+        for (CommandModel commandModel : commandModels) {
+            String actualResult = parkingLotService.executeCommand(commandModel.getCommand(), commandModel.getInput());
             Assertions.assertEquals(commandModel.getExpectedResult(), actualResult);
         }
     }
@@ -58,21 +62,21 @@ public class ParkingLotTests {
 
     private List<CommandModel> getCommandModels() {
         return Arrays.asList(
-                new CommandModel(Command.CREATE_PARKING_LOT, new String[] {"6"}, "Created a parking lot with 6 slots"),
-                new CommandModel(Command.PARK, new String[] {"KA-01-HH-1234", "White"}, "Allocated slot number: 1"),
-                new CommandModel(Command.PARK, new String[] {"KA-01-HH-9999", "White"}, "Allocated slot number: 2"),
-                new CommandModel(Command.PARK, new String[] {"KA-01-BB-0001", "Black"}, "Allocated slot number: 3"),
-                new CommandModel(Command.PARK, new String[] {"KA-01-HH-7777", "Red"}, "Allocated slot number: 4"),
-                new CommandModel(Command.PARK, new String[] {"KA-01-HH-2701", "Blue"}, "Allocated slot number: 5"),
-                new CommandModel(Command.PARK, new String[] {"KA-01-HH-3141", "Black"}, "Allocated slot number: 6"),
-                new CommandModel(Command.LEAVE, new String[] {"4"}, "Slot number 4 is free"),
+                new CommandModel(Command.CREATE_PARKING_LOT, new String[]{"6"}, "Created a parking lot with 6 slots"),
+                new CommandModel(Command.PARK, new String[]{"KA-01-HH-1234", "White"}, "Allocated slot number: 1"),
+                new CommandModel(Command.PARK, new String[]{"KA-01-HH-9999", "White"}, "Allocated slot number: 2"),
+                new CommandModel(Command.PARK, new String[]{"KA-01-BB-0001", "Black"}, "Allocated slot number: 3"),
+                new CommandModel(Command.PARK, new String[]{"KA-01-HH-7777", "Red"}, "Allocated slot number: 4"),
+                new CommandModel(Command.PARK, new String[]{"KA-01-HH-2701", "Blue"}, "Allocated slot number: 5"),
+                new CommandModel(Command.PARK, new String[]{"KA-01-HH-3141", "Black"}, "Allocated slot number: 6"),
+                new CommandModel(Command.LEAVE, new String[]{"4"}, "Slot number 4 is free"),
                 new CommandModel(Command.STATUS, new String[]{}, "Slot No.  Registration No 1         KA-01-HH-1234 2         KA-01-HH-9999 3         KA-01-BB-0001 5         KA-01-HH-2701 6         KA-01-HH-3141"),
-                new CommandModel(Command.PARK, new String[] {"KA-01-P-333", "White"}, "Allocated slot number: 4"),
-                new CommandModel(Command.PARK, new String[] {"DL-12-AA-9999", "White"}, "Sorry, parking lot is full"),
-                new CommandModel(Command.REGISTRATION_NUMBERS_FOR_CARS_WITH_COLOUR, new String[] {"White"}, "KA-01-HH-1234, KA-01-HH-9999, KA-01-P-333"),
-                new CommandModel(Command.SLOT_NUMBERS_FOR_CARS_WITH_COLOUR, new String[] {"White"}, "1, 2, 4"),
-                new CommandModel(Command.SLOT_NUMBER_FOR_REGISTRATION_NUMBER, new String[] {"KA-01-HH-3141"}, "6"),
-                new CommandModel(Command.SLOT_NUMBER_FOR_REGISTRATION_NUMBER, new String[] {"MH-04-AY-1111"}, "Not found"),
+                new CommandModel(Command.PARK, new String[]{"KA-01-P-333", "White"}, "Allocated slot number: 4"),
+                new CommandModel(Command.PARK, new String[]{"DL-12-AA-9999", "White"}, "Sorry, parking lot is full"),
+                new CommandModel(Command.REGISTRATION_NUMBERS_FOR_CARS_WITH_COLOUR, new String[]{"White"}, "KA-01-HH-1234, KA-01-HH-9999, KA-01-P-333"),
+                new CommandModel(Command.SLOT_NUMBERS_FOR_CARS_WITH_COLOUR, new String[]{"White"}, "1, 2, 4"),
+                new CommandModel(Command.SLOT_NUMBER_FOR_REGISTRATION_NUMBER, new String[]{"KA-01-HH-3141"}, "6"),
+                new CommandModel(Command.SLOT_NUMBER_FOR_REGISTRATION_NUMBER, new String[]{"MH-04-AY-1111"}, "Not found"),
                 new CommandModel(Command.EXIT, new String[]{}, "")
         );
     }
