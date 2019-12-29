@@ -17,7 +17,7 @@ public class Main {
         if (args.length == 0) {
             processUserInputAndLogOutput();
         } else {
-            executeFileAndLogOutput(args[1]);
+            executeFileAndLogOutput(args[0]);
         }
     }
 
