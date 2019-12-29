@@ -9,9 +9,9 @@ import org.junit.jupiter.api.Test;
 /**
  * @author varun.bothra
  */
-public class ParkingLotServiceGetRegistrationNumberFromColorTests extends ParkingLotServiceTests {
+public class ParkingLotServiceGetSlotNumberFromColorTests extends ParkingLotServiceTests {
     @BeforeEach
-    public void registrationNumbersFromColorTestSetup() throws InvalidCommandInputException, InvalidCommandException {
+    public void slotNumbersFromColorTestSetup() throws InvalidCommandInputException, InvalidCommandException {
         super.testSetup();
         parkingLotService.executeCommand(Command.CREATE_PARKING_LOT, "4");
         parkingLotService.executeCommand(Command.PARK, "KA-01-BB-0001", "White");
@@ -20,34 +20,34 @@ public class ParkingLotServiceGetRegistrationNumberFromColorTests extends Parkin
     }
 
     @Test
-    public void getRegistrationsNumberFromColorTest() {
+    public void getSlotNumbersFromColorTest() {
         Assertions.assertDoesNotThrow(() -> {
-            String actualResult = parkingLotService.executeCommand(Command.REGISTRATION_NUMBERS_FOR_CARS_WITH_COLOUR, "White");
-            String expectedResult = "KA-01-BB-0001, KA-01-BB-0003";
+            String actualResult = parkingLotService.executeCommand(Command.SLOT_NUMBERS_FOR_CARS_WITH_COLOUR, "White");
+            String expectedResult = "1, 3";
             Assertions.assertEquals(expectedResult, actualResult);
         });
     }
 
     @Test
-    public void getRegistrationsFromColorNoVehicleFountTest() {
+    public void getSlotNumbersFromColorNoVehicleFountTest() {
         Assertions.assertDoesNotThrow(() -> {
-            String actualResult = parkingLotService.executeCommand(Command.REGISTRATION_NUMBERS_FOR_CARS_WITH_COLOUR, "Red");
+            String actualResult = parkingLotService.executeCommand(Command.SLOT_NUMBERS_FOR_CARS_WITH_COLOUR, "Red");
             String expectedResult = Messages.NOT_FOUND;
             Assertions.assertEquals(expectedResult, actualResult);
         });
     }
 
     @Test
-    public void getRegistrationNumberFromColorWithNoInputTest() {
+        public void getSlotNumbersNumberFromColorWithNoInputTest() {
         Assertions.assertThrows(InvalidCommandInputException.class, () -> {
-            parkingLotService.executeCommand(Command.REGISTRATION_NUMBERS_FOR_CARS_WITH_COLOUR);
+            parkingLotService.executeCommand(Command.SLOT_NUMBERS_FOR_CARS_WITH_COLOUR);
         });
     }
 
     @Test
-    public void getRegistrationNumberFromColorWithInvalidColorTest() {
+    public void getSlotNumbersNumberFromColorWithInvalidColorTest() {
         Assertions.assertThrows(InvalidCommandInputException.class, () -> {
-            parkingLotService.executeCommand(Command.REGISTRATION_NUMBERS_FOR_CARS_WITH_COLOUR, "Invalid color");
+            parkingLotService.executeCommand(Command.SLOT_NUMBERS_FOR_CARS_WITH_COLOUR, "Invalid color");
         });
     }
 }

@@ -106,10 +106,30 @@ public class ParkingLot {
     }
 
     public String getVehicleRegistrationNumbers(Color color) {
-        return vehicleParkedInSlot.values()
+        String result = vehicleParkedInSlot.values()
                 .stream()
                 .filter(vehicle -> vehicle.getColor().equals(color))
                 .map(vehicle -> vehicle.getLicenseNumber())
                 .collect(Collectors.joining(", "));
+
+        return getResult(result);
+    }
+
+    private String getResult(String result) {
+        if(result.isEmpty()) {
+            return Messages.NOT_FOUND;
+        }
+
+        return result;
+    }
+
+    public String getSlotNumbers(Color color) {
+        String result = vehicleParkedInSlot.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().getColor().equals(color))
+                .map(entry -> String.valueOf(entry.getKey()))
+                .collect(Collectors.joining(", "));
+
+        return getResult(result);
     }
 }

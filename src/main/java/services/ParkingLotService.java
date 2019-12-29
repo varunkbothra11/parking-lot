@@ -83,6 +83,9 @@ public final class ParkingLotService {
             case REGISTRATION_NUMBERS_FOR_CARS_WITH_COLOUR:
                 return parkingLotHelper.getVehicleRegistrationNumbers(inputs);
 
+            case SLOT_NUMBERS_FOR_CARS_WITH_COLOUR:
+                return parkingLotHelper.getSlotNumbers(inputs);
+
             case EXIT:
                 System.exit(0);
 

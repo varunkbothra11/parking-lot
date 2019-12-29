@@ -65,4 +65,18 @@ public class ParkingLotHelper {
 
         return parkingLot.getVehicleRegistrationNumbers(color);
     }
+
+    public String getSlotNumbers(String[] inputs) throws InvalidCommandInputException {
+        if (inputs.length == 0) {
+            throw new InvalidCommandInputException(ErrorMessages.INVALID_COLOR);
+        }
+
+        Color color = Color.getCommandEnum(inputs[0]);
+
+        if (color == null) {
+            throw new InvalidCommandInputException(ErrorMessages.INVALID_COLOR);
+        }
+
+        return parkingLot.getSlotNumbers(color);
+    }
 }
