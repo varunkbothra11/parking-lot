@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @author varun.bothra
  */
-public class ParkingLotServiceUnParkVehicleTests extends ParkingLotServiceTests {
+public class ParkingLotServiceUnParkVehicleTests extends BaseParkingLotServiceTests {
     @BeforeEach
     public void parkingVehicleTestSetup() throws Exception {
         super.testSetup();
@@ -39,7 +39,6 @@ public class ParkingLotServiceUnParkVehicleTests extends ParkingLotServiceTests 
             parkingLotService.executeCommand(Command.LEAVE, "10");
         });
     }
-
 
     @Test
     public void unParkVehicleWithFreeSlotNumber() {

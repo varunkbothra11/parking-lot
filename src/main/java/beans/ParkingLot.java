@@ -5,6 +5,8 @@ import constants.Messages;
 import constants.TableRepresentations;
 import enums.Color;
 import exceptions.InvalidCommandInputException;
+import exceptions.ParkingLotAlreadyCreated;
+import exceptions.ParkingLotDoesNotExists;
 import services.logger.ILogger;
 
 import java.util.HashMap;
@@ -17,25 +19,13 @@ import java.util.stream.Collectors;
  * @author varun.bothra
  */
 public class ParkingLot {
-    private static ParkingLot parkingLot;
     private ILogger log;
     private int totalParkingSlots;
     private Queue<Integer> parkingSlots;
     private Map<Integer, Vehicle> vehicleParkedInSlot;
 
-    private ParkingLot(ILogger log) {
+    public ParkingLot(ILogger log) {
         this.log = log;
-    }
-
-    public static ParkingLot getInstance(ILogger log) {
-        synchronized (ParkingLot.class) {
-            if (parkingLot == null) {
-                parkingLot = new ParkingLot(log);
-                return parkingLot;
-            }
-
-            return parkingLot;
-        }
     }
 
     public String createParkingLot(int numberOfSlots) throws InvalidCommandInputException {
@@ -64,7 +54,6 @@ public class ParkingLot {
     }
 
     private Queue<Integer> createParkingSlots(int numberOfSlots) {
-
         // Priority queue is required to always allocate the nearest parking slot.
         Queue<Integer> parkingSlots = new PriorityQueue<>();
 
@@ -136,10 +125,22 @@ public class ParkingLot {
     }
 
     private String getResult(String result) {
-        if(result.isEmpty()) {
+        if (result.isEmpty()) {
             return Messages.NOT_FOUND;
         }
 
         return result;
+    }
+
+    public void validateIfParkingLotExists() throws ParkingLotDoesNotExists {
+        if (this.parkingSlots == null) {
+            throw new ParkingLotDoesNotExists(ErrorMessages.PARKING_LOT_DOES_NOT_EXISTS);
+        }
+    }
+
+    public void validateIfParkingLotDoesExists() throws ParkingLotAlreadyCreated {
+        if (this.parkingSlots != null) {
+            throw new ParkingLotAlreadyCreated(ErrorMessages.PARKING_LOT_ALREADY_CREATED);
+        }
     }
 }

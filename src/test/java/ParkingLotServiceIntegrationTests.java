@@ -1,6 +1,7 @@
 import enums.Command;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import services.ParkingLotService;
 import services.logger.BlackHoleLogger;
@@ -15,8 +16,8 @@ import java.util.List;
 public class ParkingLotServiceIntegrationTests {
     private static ParkingLotService parkingLotService;
 
-    @BeforeAll
-    public static void testSetup() {
+    @BeforeEach
+    public void testSetup() {
         ILogger log = new BlackHoleLogger();
         parkingLotService = new ParkingLotService(log);
     }

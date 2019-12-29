@@ -2,6 +2,8 @@ import constants.Messages;
 import enums.Command;
 import exceptions.InvalidCommandException;
 import exceptions.InvalidCommandInputException;
+import exceptions.ParkingLotAlreadyCreated;
+import exceptions.ParkingLotDoesNotExists;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,9 +11,9 @@ import org.junit.jupiter.api.Test;
 /**
  * @author varun.bothra
  */
-public class ParkingLotServiceGetSlotNumberFromLicenseNumberTests extends ParkingLotServiceTests {
+public class ParkingLotServiceGetSlotNumberFromLicenseNumberTests extends BaseParkingLotServiceTests {
     @BeforeEach
-    public void slotNumberFromLicenseNumberTestSetup() throws InvalidCommandInputException, InvalidCommandException {
+    public void slotNumberFromLicenseNumberTestSetup() throws InvalidCommandInputException, InvalidCommandException, ParkingLotAlreadyCreated, ParkingLotDoesNotExists {
         super.testSetup();
         parkingLotService.executeCommand(Command.CREATE_PARKING_LOT, "4");
         parkingLotService.executeCommand(Command.PARK, "KA-01-BB-0001", "White");

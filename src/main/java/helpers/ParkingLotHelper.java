@@ -4,6 +4,8 @@ import beans.ParkingLot;
 import constants.ErrorMessages;
 import enums.Color;
 import exceptions.InvalidCommandInputException;
+import exceptions.ParkingLotAlreadyCreated;
+import exceptions.ParkingLotDoesNotExists;
 
 /**
  * @author varun.bothra
@@ -86,5 +88,13 @@ public class ParkingLotHelper {
         }
 
         return parkingLot.getSlotNumber(inputs[0]);
+    }
+
+    public void validateIfParkingLotExists() throws ParkingLotDoesNotExists {
+        parkingLot.validateIfParkingLotExists();
+    }
+
+    public void validateIfParkingLotDoesExists() throws ParkingLotAlreadyCreated {
+        parkingLot.validateIfParkingLotDoesExists();
     }
 }

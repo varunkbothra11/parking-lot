@@ -2,6 +2,8 @@ import constants.Messages;
 import enums.Command;
 import exceptions.InvalidCommandException;
 import exceptions.InvalidCommandInputException;
+import exceptions.ParkingLotAlreadyCreated;
+import exceptions.ParkingLotDoesNotExists;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,9 +11,9 @@ import org.junit.jupiter.api.Test;
 /**
  * @author varun.bothra
  */
-public class ParkingLotServiceGetRegistrationNumbersFromColorTests extends ParkingLotServiceTests {
+public class ParkingLotServiceGetRegistrationNumbersFromColorTests extends BaseParkingLotServiceTests {
     @BeforeEach
-    public void registrationNumbersFromColorTestSetup() throws InvalidCommandInputException, InvalidCommandException {
+    public void registrationNumbersFromColorTestSetup() throws InvalidCommandInputException, InvalidCommandException, ParkingLotAlreadyCreated, ParkingLotDoesNotExists {
         super.testSetup();
         parkingLotService.executeCommand(Command.CREATE_PARKING_LOT, "4");
         parkingLotService.executeCommand(Command.PARK, "KA-01-BB-0001", "White");
@@ -29,7 +31,7 @@ public class ParkingLotServiceGetRegistrationNumbersFromColorTests extends Parki
     }
 
     @Test
-    public void getRegistrationsFromColorNoVehicleFountTest() {
+    public void getRegistrationsFromColorNoVehicleFoundTest() {
         Assertions.assertDoesNotThrow(() -> {
             String actualResult = parkingLotService.executeCommand(Command.REGISTRATION_NUMBERS_FOR_CARS_WITH_COLOUR, "Red");
             String expectedResult = Messages.NOT_FOUND;

@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @author varun.bothra
  */
-public class ParkingLotServiceStatusCommandTests extends ParkingLotServiceTests {
+public class ParkingLotServiceStatusCommandTests extends BaseParkingLotServiceTests {
     @BeforeEach
     public void statusCommandTestSetup() throws Exception {
         super.testSetup();
