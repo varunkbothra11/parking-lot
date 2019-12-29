@@ -7,7 +7,7 @@ public class ParkingSlot {
         return this.id;
     }
 
-    public void setId(int id) {
+    public ParkingSlot(int id) {
         this.id = id;
     }
 }

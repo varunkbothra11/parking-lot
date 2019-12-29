@@ -1,6 +1,7 @@
 package services;
 
 import beans.ParkingLot;
+import enums.Color;
 import enums.Command;
 import exceptions.InvalidCommandException;
 import exceptions.InvalidCommandInputException;
@@ -68,6 +69,14 @@ public final class ParkingLotService {
                 int numberOfSlots = Integer.parseInt(inputs[0]);
                 return parkingLot.createParkingLot(numberOfSlots);
 
+            case PARK:
+                if (inputs.length < 2) {
+                    throw new InvalidCommandInputException("Please specify the car license number and the color");
+                }
+
+                String licenseNumber = inputs[0];
+                Color color = Color.getCommandEnum(inputs[1]);
+                return parkingLot.parkVehicle(licenseNumber, color);
             case EXIT:
                 System.exit(0);
 
