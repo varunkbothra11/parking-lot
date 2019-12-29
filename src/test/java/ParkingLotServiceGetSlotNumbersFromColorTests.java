@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @author varun.bothra
  */
-public class ParkingLotServiceGetSlotNumberFromColorTests extends ParkingLotServiceTests {
+public class ParkingLotServiceGetSlotNumbersFromColorTests extends ParkingLotServiceTests {
     @BeforeEach
     public void slotNumbersFromColorTestSetup() throws InvalidCommandInputException, InvalidCommandException {
         super.testSetup();
@@ -29,7 +29,7 @@ public class ParkingLotServiceGetSlotNumberFromColorTests extends ParkingLotServ
     }
 
     @Test
-    public void getSlotNumbersFromColorNoVehicleFountTest() {
+    public void getSlotNumbersFromColorNoVehicleFoundTest() {
         Assertions.assertDoesNotThrow(() -> {
             String actualResult = parkingLotService.executeCommand(Command.SLOT_NUMBERS_FOR_CARS_WITH_COLOUR, "Red");
             String expectedResult = Messages.NOT_FOUND;

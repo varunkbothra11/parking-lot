@@ -79,4 +79,12 @@ public class ParkingLotHelper {
 
         return parkingLot.getSlotNumbers(color);
     }
+
+    public String getSlotNumber(String[] inputs) throws InvalidCommandInputException {
+        if (inputs.length == 0) {
+            throw new InvalidCommandInputException(ErrorMessages.INVALID_COLOR);
+        }
+
+        return parkingLot.getSlotNumber(inputs[0]);
+    }
 }

@@ -77,14 +77,18 @@ public class ParkingLotServiceIntegrationTests {
                 new CommandModel(Command.PARK, new String[]{"KA-01-HH-2701", "Blue"}, "Allocated slot number: 5"),
                 new CommandModel(Command.PARK, new String[]{"KA-01-HH-3141", "Black"}, "Allocated slot number: 6"),
                 new CommandModel(Command.LEAVE, new String[]{"4"}, "Slot number 4 is free"),
-                new CommandModel(Command.STATUS, new String[]{}, "Slot No.  Registration No 1         KA-01-HH-1234 2         KA-01-HH-9999 3         KA-01-BB-0001 5         KA-01-HH-2701 6         KA-01-HH-3141"),
+                new CommandModel(Command.STATUS, new String[]{}, "Slot No.      Registration number     Color\n" +
+                        "1             KA-01-HH-1234           White\n" +
+                        "2             KA-01-HH-9999           White\n" +
+                        "3             KA-01-BB-0001           Black\n" +
+                        "5             KA-01-HH-2701           Blue\n" +
+                        "6             KA-01-HH-3141           Black"),
                 new CommandModel(Command.PARK, new String[]{"KA-01-P-333", "White"}, "Allocated slot number: 4"),
                 new CommandModel(Command.PARK, new String[]{"DL-12-AA-9999", "White"}, "Sorry, parking lot is full"),
                 new CommandModel(Command.REGISTRATION_NUMBERS_FOR_CARS_WITH_COLOUR, new String[]{"White"}, "KA-01-HH-1234, KA-01-HH-9999, KA-01-P-333"),
                 new CommandModel(Command.SLOT_NUMBERS_FOR_CARS_WITH_COLOUR, new String[]{"White"}, "1, 2, 4"),
                 new CommandModel(Command.SLOT_NUMBER_FOR_REGISTRATION_NUMBER, new String[]{"KA-01-HH-3141"}, "6"),
-                new CommandModel(Command.SLOT_NUMBER_FOR_REGISTRATION_NUMBER, new String[]{"MH-04-AY-1111"}, "Not found"),
-                new CommandModel(Command.EXIT, new String[]{}, "")
+                new CommandModel(Command.SLOT_NUMBER_FOR_REGISTRATION_NUMBER, new String[]{"MH-04-AY-1111"}, "Not found")
         );
     }
 

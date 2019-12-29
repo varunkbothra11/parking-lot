@@ -115,14 +115,6 @@ public class ParkingLot {
         return getResult(result);
     }
 
-    private String getResult(String result) {
-        if(result.isEmpty()) {
-            return Messages.NOT_FOUND;
-        }
-
-        return result;
-    }
-
     public String getSlotNumbers(Color color) {
         String result = vehicleParkedInSlot.entrySet()
                 .stream()
@@ -131,5 +123,23 @@ public class ParkingLot {
                 .collect(Collectors.joining(", "));
 
         return getResult(result);
+    }
+
+    public String getSlotNumber(String licenseNumber) {
+        String result = vehicleParkedInSlot.entrySet()
+                .stream()
+                .filter(entry -> entry.getValue().getLicenseNumber().equals(licenseNumber))
+                .map(entry -> String.valueOf(entry.getKey()))
+                .collect(Collectors.joining(", "));
+
+        return getResult(result);
+    }
+
+    private String getResult(String result) {
+        if(result.isEmpty()) {
+            return Messages.NOT_FOUND;
+        }
+
+        return result;
     }
 }

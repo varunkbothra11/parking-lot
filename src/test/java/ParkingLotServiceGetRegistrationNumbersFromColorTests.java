@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 /**
  * @author varun.bothra
  */
-public class ParkingLotServiceGetRegistrationNumberFromColorTests extends ParkingLotServiceTests {
+public class ParkingLotServiceGetRegistrationNumbersFromColorTests extends ParkingLotServiceTests {
     @BeforeEach
     public void registrationNumbersFromColorTestSetup() throws InvalidCommandInputException, InvalidCommandException {
         super.testSetup();

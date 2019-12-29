@@ -86,6 +86,9 @@ public final class ParkingLotService {
             case SLOT_NUMBERS_FOR_CARS_WITH_COLOUR:
                 return parkingLotHelper.getSlotNumbers(inputs);
 
+            case SLOT_NUMBER_FOR_REGISTRATION_NUMBER:
+                return parkingLotHelper.getSlotNumber(inputs);
+
             case EXIT:
                 System.exit(0);
 
@@ -104,7 +107,7 @@ public final class ParkingLotService {
         List<String> results = new ArrayList<String>();
 
         for (String line : lines) {
-            processCommand(line);
+            results.add(processCommand(line));
         }
 
         return results;
