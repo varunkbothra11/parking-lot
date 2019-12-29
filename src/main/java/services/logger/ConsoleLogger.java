@@ -1,5 +1,8 @@
 package services.logger;
 
+/**
+ * @author varun.bothra
+ */
 public class ConsoleLogger implements ILogger {
 
     public void info(String message) {

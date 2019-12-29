@@ -6,10 +6,12 @@ import services.ParkingLotService;
 import services.logger.BlackHoleLogger;
 import services.logger.ILogger;
 
-import java.io.FileNotFoundException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * @author varun.bothra
+ */
 public class ParkingLotServiceIntegrationTests {
     private static ParkingLotService parkingLotService;
 
@@ -20,7 +22,7 @@ public class ParkingLotServiceIntegrationTests {
     }
 
     @Test
-    public void executeFileTest() throws FileNotFoundException {
+    public void executeFileTest() {
         String resourceName = "file_test_inputs1.txt";
         String filePath = getClass().getResource(resourceName).getPath();
         final List<String> actualResult = parkingLotService.executeFile(filePath);
@@ -51,7 +53,12 @@ public class ParkingLotServiceIntegrationTests {
                 "Allocated slot number: 5",
                 "Allocated slot number: 6",
                 "Slot number 4 is free",
-                "Slot No.  Registration No 1         KA-01-HH-1234 2         KA-01-HH-9999 3         KA-01-BB-0001 5         KA-01-HH-2701 6         KA-01-HH-3141",
+                "Slot No.      Registration number     Color\n" +
+                        "1             KA-01-HH-1234           White\n" +
+                        "2             KA-01-HH-9999           White\n" +
+                        "3             KA-01-BB-0001           Black\n" +
+                        "5             KA-01-HH-2701           Blue\n" +
+                        "6             KA-01-HH-3141           Black",
                 "Allocated slot number: 4",
                 "Sorry, parking lot is full",
                 "KA-01-HH-1234, KA-01-HH-9999, KA-01-P-333",

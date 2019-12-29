@@ -1,6 +1,8 @@
 package beans;
 
+import constants.ErrorMessages;
 import constants.Messages;
+import constants.TableRepresentations;
 import enums.Color;
 import exceptions.InvalidCommandInputException;
 import services.logger.ILogger;
@@ -9,7 +11,11 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.PriorityQueue;
 import java.util.Queue;
+import java.util.stream.Collectors;
 
+/**
+ * @author varun.bothra
+ */
 public class ParkingLot {
     private static ParkingLot parkingLot;
     private ILogger log;
@@ -34,7 +40,7 @@ public class ParkingLot {
 
     public String createParkingLot(int numberOfSlots) throws InvalidCommandInputException {
         if (numberOfSlots == 0) {
-            throw new InvalidCommandInputException("Atleast one slot is required to create parking lot.");
+            throw new InvalidCommandInputException(ErrorMessages.INVALID_SLOT_NUMBER_VALUE);
         }
 
         this.parkingSlots = createParkingSlots(numberOfSlots);
@@ -71,16 +77,39 @@ public class ParkingLot {
 
     public String unParkVehicle(int slotNumber) throws InvalidCommandInputException {
         if (slotNumber > this.totalParkingSlots) {
-            throw new InvalidCommandInputException("Invalid slot number");
+            throw new InvalidCommandInputException(ErrorMessages.INVALID_SLOT_NUMBER);
         }
 
         if (this.vehicleParkedInSlot.get(slotNumber) == null) {
-            throw new InvalidCommandInputException("No vehicle parking in the specified slot");
+            throw new InvalidCommandInputException(ErrorMessages.NO_VEHICLE_PARKED);
         }
 
         this.vehicleParkedInSlot.remove(slotNumber);
         this.parkingSlots.add(slotNumber);
 
         return String.format(Messages.UNPARK_VEHICLE_MESSAGE, slotNumber);
+    }
+
+    public String getStatus() {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(String.format(TableRepresentations.HEADER_FORMAT, TableRepresentations.SLOT_HEADER_NAME, TableRepresentations.REGISTRATION_NUMBER_HEADER_NAME, TableRepresentations.COLOR_HEADER_NAME));
+
+        for (int i = 1; i <= this.totalParkingSlots; ++i) {
+            if (this.vehicleParkedInSlot.containsKey(i)) {
+                Vehicle vehicle = this.vehicleParkedInSlot.get(i);
+                stringBuilder.append(System.lineSeparator());
+                stringBuilder.append(String.format(TableRepresentations.CONTENT_FORMAT, i, vehicle.getLicenseNumber(), vehicle.getColor().getName()));
+            }
+        }
+
+        return stringBuilder.toString();
+    }
+
+    public String getVehicleRegistrationNumbers(Color color) {
+        return vehicleParkedInSlot.values()
+                .stream()
+                .filter(vehicle -> vehicle.getColor().equals(color))
+                .map(vehicle -> vehicle.getLicenseNumber())
+                .collect(Collectors.joining(", "));
     }
 }

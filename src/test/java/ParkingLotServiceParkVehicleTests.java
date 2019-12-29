@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * @author varun.bothra
+ */
 public class ParkingLotServiceParkVehicleTests extends ParkingLotServiceTests {
     @BeforeEach
     public void parkingVehicleTestSetup() throws Exception {
@@ -45,6 +48,13 @@ public class ParkingLotServiceParkVehicleTests extends ParkingLotServiceTests {
     public void executeParkVehicleCommandWithNoVehicleColor() {
         Assertions.assertThrows(InvalidCommandInputException.class, () -> {
             parkingLotService.executeCommand(Command.PARK, "KA-01-HH-1234");
+        });
+    }
+
+    @Test
+    public void executeParkVehicleCommandWithInvalidColor() {
+        Assertions.assertThrows(InvalidCommandInputException.class, () -> {
+            parkingLotService.executeCommand(Command.PARK, "KA-01-HH-1234", "Invalid color");
         });
     }
 }

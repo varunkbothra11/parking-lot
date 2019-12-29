@@ -3,6 +3,9 @@ package enums;
 import java.util.Arrays;
 import java.util.Optional;
 
+/**
+ * @author varun.bothra
+ */
 public enum Command {
     CREATE_PARKING_LOT("create_parking_lot"),
     PARK("park"),

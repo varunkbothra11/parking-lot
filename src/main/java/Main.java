@@ -4,6 +4,9 @@ import services.logger.ILogger;
 
 import java.util.Scanner;
 
+/**
+ * @author varun.bothra
+ */
 public class Main {
     private static ILogger log = new ConsoleLogger();
     private static ParkingLotService parkingLotService = new ParkingLotService(log);

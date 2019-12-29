@@ -1,5 +1,8 @@
 package constants;
 
+/**
+ * @author varun.bothra
+ */
 public class Messages {
     final public static String CREATE_PARKING_LOT_MESSAGE = "Created a parking lot with %d slots";
     final public static String PARKED_VEHICLE_MESSAGE = "Allocated slot number: %d";

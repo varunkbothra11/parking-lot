@@ -6,6 +6,9 @@ import services.ParkingLotService;
 import services.logger.BlackHoleLogger;
 import services.logger.ILogger;
 
+/**
+ * @author varun.bothra
+ */
 public class ParkingLotServiceTests {
     protected static ParkingLotService parkingLotService;
 

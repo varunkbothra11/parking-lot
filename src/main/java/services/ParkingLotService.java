@@ -1,6 +1,7 @@
 package services;
 
 import beans.ParkingLot;
+import constants.ErrorMessages;
 import enums.Command;
 import exceptions.InvalidCommandException;
 import exceptions.InvalidCommandInputException;
@@ -12,8 +13,10 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Collectors;
 
+/**
+ * @author varun.bothra
+ */
 public final class ParkingLotService {
     private ILogger log;
     private ParkingLot parkingLot;
@@ -61,7 +64,7 @@ public final class ParkingLotService {
 
     public String executeCommand(Command command, String... inputs) throws InvalidCommandInputException, InvalidCommandException {
         if (command == null) {
-            throw new InvalidCommandException("Invalid command");
+            throw new InvalidCommandException(ErrorMessages.INVALID_COMMAND);
         }
 
         switch (command) {
@@ -74,19 +77,24 @@ public final class ParkingLotService {
             case LEAVE:
                 return parkingLotHelper.unParkVehicle(inputs);
 
+            case STATUS:
+                return parkingLotHelper.getStatus();
+
+            case REGISTRATION_NUMBERS_FOR_CARS_WITH_COLOUR:
+                return parkingLotHelper.getVehicleRegistrationNumbers(inputs);
+
             case EXIT:
                 System.exit(0);
 
             default:
-                throw new InvalidCommandException("Invalid command");
+                throw new InvalidCommandException(ErrorMessages.INVALID_COMMAND);
         }
     }
 
     private String processCommand(String line) throws Exception {
-        String[] words = line.trim().split(" ");
-        List<String> trimmedWords = Arrays.stream(words).map(word -> word.trim()).collect(Collectors.toList());
-        Command command = Command.getCommandEnum(trimmedWords.get(0));
-        return executeCommand(command, (String[]) trimmedWords.subList(1, trimmedWords.size()).toArray());
+        String[] words = line.trim().split(" +");
+        Command command = Command.getCommandEnum(words[0]);
+        return executeCommand(command, Arrays.copyOfRange(words, 1, words.length));
     }
 
     private List<String> processCommands(List<String> lines) throws Exception {

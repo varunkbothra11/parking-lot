@@ -1,4 +1,3 @@
-import com.apple.eawt.event.MagnificationEvent;
 import constants.Messages;
 import enums.Command;
 import exceptions.InvalidCommandInputException;
@@ -6,7 +5,10 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ParkingLotServiceUnParkVehicleTests extends ParkingLotServiceTests{
+/**
+ * @author varun.bothra
+ */
+public class ParkingLotServiceUnParkVehicleTests extends ParkingLotServiceTests {
     @BeforeEach
     public void parkingVehicleTestSetup() throws Exception {
         super.testSetup();

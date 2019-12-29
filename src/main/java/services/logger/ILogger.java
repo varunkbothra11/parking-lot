@@ -1,5 +1,8 @@
 package services.logger;
 
+/**
+ * @author varun.bothra
+ */
 public interface ILogger {
     void info(String message);
 

@@ -3,12 +3,15 @@ package enums;
 import java.util.Arrays;
 import java.util.Optional;
 
+/**
+ * @author varun.bothra
+ */
 public enum Color {
-    RED("name"),
-    GREEN("green"),
-    BLUE("blue"),
-    BLACK("black"),
-    WHITE("white");
+    RED("Red"),
+    GREEN("Green"),
+    BLUE("Blue"),
+    BLACK("Black"),
+    WHITE("White");
 
     private String name;
 

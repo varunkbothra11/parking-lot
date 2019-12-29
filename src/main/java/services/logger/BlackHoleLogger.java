@@ -1,5 +1,8 @@
 package services.logger;
 
+/**
+ * @author varun.bothra
+ */
 public class BlackHoleLogger implements ILogger {
     public void info(String message) {
 

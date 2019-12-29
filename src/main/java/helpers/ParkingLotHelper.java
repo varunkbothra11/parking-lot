@@ -1,9 +1,13 @@
 package helpers;
 
 import beans.ParkingLot;
+import constants.ErrorMessages;
 import enums.Color;
 import exceptions.InvalidCommandInputException;
 
+/**
+ * @author varun.bothra
+ */
 public class ParkingLotHelper {
     private static ParkingLot parkingLot;
 
@@ -13,7 +17,7 @@ public class ParkingLotHelper {
 
     public String createParkingLot(String[] inputs) throws InvalidCommandInputException {
         if (inputs.length == 0) {
-            throw new InvalidCommandInputException("Please specify the number of slots to create");
+            throw new InvalidCommandInputException(ErrorMessages.CREATE_PARKING_LOT_INVALID_INPUT);
         }
 
         int numberOfSlots = Integer.parseInt(inputs[0]);
@@ -22,20 +26,43 @@ public class ParkingLotHelper {
 
     public String parkVehicle(String[] inputs) throws InvalidCommandInputException {
         if (inputs.length < 2) {
-            throw new InvalidCommandInputException("Please specify the car license number and the color");
+            throw new InvalidCommandInputException(ErrorMessages.PARK_VEHICLE_INVALID_INPUT);
         }
 
         String licenseNumber = inputs[0];
         Color color = Color.getCommandEnum(inputs[1]);
+
+        if (color == null) {
+            throw new InvalidCommandInputException(ErrorMessages.INVALID_COLOR);
+        }
+
         return parkingLot.parkVehicle(licenseNumber, color);
     }
 
-    public static String unParkVehicle(String[] inputs) throws InvalidCommandInputException {
+    public String unParkVehicle(String[] inputs) throws InvalidCommandInputException {
         if (inputs.length == 0) {
-            throw new InvalidCommandInputException("Please enter the slot number to un-park the vehicle");
+            throw new InvalidCommandInputException(ErrorMessages.UNPARK_VEHICLE_INVALID_INPUT);
         }
 
         int slotNumber = Integer.parseInt(inputs[0]);
         return parkingLot.unParkVehicle(slotNumber);
+    }
+
+    public String getStatus() {
+        return parkingLot.getStatus();
+    }
+
+    public String getVehicleRegistrationNumbers(String[] inputs) throws InvalidCommandInputException {
+        if (inputs.length == 0) {
+            throw new InvalidCommandInputException(ErrorMessages.INVALID_COLOR);
+        }
+
+        Color color = Color.getCommandEnum(inputs[0]);
+
+        if (color == null) {
+            throw new InvalidCommandInputException(ErrorMessages.INVALID_COLOR);
+        }
+
+        return parkingLot.getVehicleRegistrationNumbers(color);
     }
 }

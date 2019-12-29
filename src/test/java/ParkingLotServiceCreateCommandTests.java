@@ -4,6 +4,9 @@ import exceptions.InvalidCommandInputException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+/**
+ * @author varun.bothra
+ */
 public class ParkingLotServiceCreateCommandTests extends ParkingLotServiceTests {
     @Test
     public void createParkingLotTest() {
