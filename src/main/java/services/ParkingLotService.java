@@ -1,26 +1,30 @@
 package services;
 
 import beans.ParkingLot;
-import enums.Color;
 import enums.Command;
 import exceptions.InvalidCommandException;
 import exceptions.InvalidCommandInputException;
+import helpers.FileProcessingHelper;
+import helpers.ParkingLotHelper;
 import services.logger.ILogger;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public final class ParkingLotService {
     private ILogger log;
     private ParkingLot parkingLot;
+    private ParkingLotHelper parkingLotHelper;
+    private FileProcessingHelper fileProcessingHelper;
 
     public ParkingLotService(ILogger log) {
         this.log = log;
         parkingLot = ParkingLot.getInstance(log);
+        parkingLotHelper = new ParkingLotHelper(parkingLot);
+        fileProcessingHelper = new FileProcessingHelper();
     }
 
     public void executeFileAndLogOutput(String filePath) {
@@ -39,8 +43,8 @@ public final class ParkingLotService {
 
     public List<String> executeFile(String filePath) {
         try {
-            String absoluteFilePath = getAbsoluteFilePath(filePath);
-            List<String> fileContents = readFromFile(absoluteFilePath);
+            String absoluteFilePath = fileProcessingHelper.getAbsoluteFilePath(filePath);
+            List<String> fileContents = fileProcessingHelper.readFromFile(absoluteFilePath);
             return processCommands(fileContents);
         } catch (FileNotFoundException exception) {
             log.error(filePath + " is not found", exception);
@@ -62,21 +66,14 @@ public final class ParkingLotService {
 
         switch (command) {
             case CREATE_PARKING_LOT:
-                if (inputs.length == 0) {
-                    throw new InvalidCommandInputException("Please specify the number of slots to create");
-                }
-
-                int numberOfSlots = Integer.parseInt(inputs[0]);
-                return parkingLot.createParkingLot(numberOfSlots);
+                return parkingLotHelper.createParkingLot(inputs);
 
             case PARK:
-                if (inputs.length < 2) {
-                    throw new InvalidCommandInputException("Please specify the car license number and the color");
-                }
+                return parkingLotHelper.parkVehicle(inputs);
 
-                String licenseNumber = inputs[0];
-                Color color = Color.getCommandEnum(inputs[1]);
-                return parkingLot.parkVehicle(licenseNumber, color);
+            case LEAVE:
+                return parkingLotHelper.unParkVehicle(inputs);
+
             case EXIT:
                 System.exit(0);
 
@@ -86,9 +83,10 @@ public final class ParkingLotService {
     }
 
     private String processCommand(String line) throws Exception {
-        final String[] words = line.trim().split(" ");
-        Command command = Command.getCommandEnum(words[0]);
-        return executeCommand(command, Arrays.copyOfRange(words, 1, words.length));
+        String[] words = line.trim().split(" ");
+        List<String> trimmedWords = Arrays.stream(words).map(word -> word.trim()).collect(Collectors.toList());
+        Command command = Command.getCommandEnum(trimmedWords.get(0));
+        return executeCommand(command, (String[]) trimmedWords.subList(1, trimmedWords.size()).toArray());
     }
 
     private List<String> processCommands(List<String> lines) throws Exception {
@@ -99,28 +97,6 @@ public final class ParkingLotService {
         }
 
         return results;
-    }
-
-    private List<String> readFromFile(String absoluteFilePath) throws FileNotFoundException {
-        List<String> fileContents = new ArrayList<String>();
-        File file = new File(absoluteFilePath);
-        Scanner scanner = new Scanner(file);
-
-        while (scanner.hasNextLine()) {
-            fileContents.add(scanner.nextLine());
-        }
-
-        return fileContents;
-    }
-
-    private String getAbsoluteFilePath(String filePath) throws FileNotFoundException {
-        File file = new File(filePath);
-
-        if (!file.exists()) {
-            throw new FileNotFoundException("Invalid file path");
-        }
-
-        return file.getAbsolutePath();
     }
 
     private void logResults(List<String> results) {

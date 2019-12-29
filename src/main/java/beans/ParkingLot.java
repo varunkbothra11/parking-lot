@@ -5,13 +5,17 @@ import enums.Color;
 import exceptions.InvalidCommandInputException;
 import services.logger.ILogger;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.PriorityQueue;
+import java.util.Queue;
 
 public class ParkingLot {
     private static ParkingLot parkingLot;
     private ILogger log;
-    private Queue<ParkingSlot> parkingSlots;
-    private Map<ParkingSlot, Vehicle> vehicleParkedInSlot;
+    private int totalParkingSlots;
+    private Queue<Integer> parkingSlots;
+    private Map<Integer, Vehicle> vehicleParkedInSlot;
 
     private ParkingLot(ILogger log) {
         this.log = log;
@@ -35,6 +39,7 @@ public class ParkingLot {
 
         this.parkingSlots = createParkingSlots(numberOfSlots);
         this.vehicleParkedInSlot = new HashMap<>();
+        this.totalParkingSlots = numberOfSlots;
 
         return String.format(Messages.CREATE_PARKING_LOT_MESSAGE, numberOfSlots);
     }
@@ -46,34 +51,36 @@ public class ParkingLot {
             return Messages.PARKING_FULL_MESSAGE;
         }
 
-        ParkingSlot parkingSlot = parkingSlots.remove();
+        Integer parkingSlot = parkingSlots.remove();
         vehicleParkedInSlot.putIfAbsent(parkingSlot, vehicle);
 
-        return String.format(Messages.PARKED_VEHICLE_MESSAGE, parkingSlot.getId());
+        return String.format(Messages.PARKED_VEHICLE_MESSAGE, parkingSlot);
     }
 
-    private Queue<ParkingSlot> createParkingSlots(int numberOfSlots) {
+    private Queue<Integer> createParkingSlots(int numberOfSlots) {
 
-        // This is required t
-        Queue<ParkingSlot> parkingSlots = new PriorityQueue<>(new ParkingSlotComparator());
+        // Priority queue is required to always allocate the nearest parking slot.
+        Queue<Integer> parkingSlots = new PriorityQueue<>();
 
         for (int i = 1; i <= numberOfSlots; ++i) {
-            parkingSlots.add(new ParkingSlot(i));
+            parkingSlots.add(i);
         }
 
         return parkingSlots;
     }
 
-    private static class ParkingSlotComparator implements Comparator<ParkingSlot> {
-        @Override
-        public int compare(ParkingSlot slot1, ParkingSlot slot2) {
-            if (slot1.getId() < slot2.getId()) {
-                return -1;
-            } else if (slot1.getId() > slot2.getId()) {
-                return 1;
-            } else {
-                return 0;
-            }
+    public String unParkVehicle(int slotNumber) throws InvalidCommandInputException {
+        if (slotNumber > this.totalParkingSlots) {
+            throw new InvalidCommandInputException("Invalid slot number");
         }
+
+        if (this.vehicleParkedInSlot.get(slotNumber) == null) {
+            throw new InvalidCommandInputException("No vehicle parking in the specified slot");
+        }
+
+        this.vehicleParkedInSlot.remove(slotNumber);
+        this.parkingSlots.add(slotNumber);
+
+        return String.format(Messages.UNPARK_VEHICLE_MESSAGE, slotNumber);
     }
 }

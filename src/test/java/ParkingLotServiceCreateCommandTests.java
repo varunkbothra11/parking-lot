@@ -1,12 +1,10 @@
-package beans;
-
 import constants.Messages;
 import enums.Command;
 import exceptions.InvalidCommandInputException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-public class ParkingLotCreateCommandTests extends ParkingLotTests {
+public class ParkingLotServiceCreateCommandTests extends ParkingLotServiceTests {
     @Test
     public void createParkingLotTest() {
         Assertions.assertDoesNotThrow(() -> {
@@ -16,7 +14,15 @@ public class ParkingLotCreateCommandTests extends ParkingLotTests {
     }
 
     @Test
-    public void createParkingLotWithnoInputTest() {
+    public void createParkingLotWithInvalidSlotNumber() {
+        Assertions.assertThrows(NumberFormatException.class, () -> {
+            String result = parkingLotService.executeCommand(Command.CREATE_PARKING_LOT, "sdkjfb");
+            Assertions.assertEquals(String.format(Messages.CREATE_PARKING_LOT_MESSAGE, 3), result);
+        });
+    }
+
+    @Test
+    public void createParkingLotWithNoInputTest() {
         Assertions.assertThrows(InvalidCommandInputException.class, () -> {
             parkingLotService.executeCommand(Command.CREATE_PARKING_LOT, new String[]{});
         });

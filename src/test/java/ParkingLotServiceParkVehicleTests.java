@@ -1,5 +1,3 @@
-package beans;
-
 import constants.Messages;
 import enums.Command;
 import exceptions.InvalidCommandInputException;
@@ -7,7 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-public class ParkingLotParkVehicleTests extends ParkingLotTests {
+public class ParkingLotServiceParkVehicleTests extends ParkingLotServiceTests {
     @BeforeEach
     public void parkingVehicleTestSetup() throws Exception {
         super.testSetup();
