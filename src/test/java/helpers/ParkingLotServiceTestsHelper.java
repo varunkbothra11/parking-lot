@@ -13,12 +13,12 @@ public class ParkingLotServiceTestsHelper {
                 "Allocated slot number: 5",
                 "Allocated slot number: 6",
                 "Slot number 4 is free",
-                "Slot No.      Registration number     Color\n" +
-                        "1             KA-01-HH-1234           White\n" +
-                        "2             KA-01-HH-9999           White\n" +
-                        "3             KA-01-BB-0001           Black\n" +
-                        "5             KA-01-HH-2701           Blue\n" +
-                        "6             KA-01-HH-3141           Black",
+                "Slot No.    Registration No    Colour\n" +
+                        "1           KA-01-HH-1234      White\n" +
+                        "2           KA-01-HH-9999      White\n" +
+                        "3           KA-01-BB-0001      Black\n" +
+                        "5           KA-01-HH-2701      Blue\n" +
+                        "6           KA-01-HH-3141      Black",
                 "Allocated slot number: 4",
                 "Sorry, parking lot is full",
                 "KA-01-HH-1234, KA-01-HH-9999, KA-01-P-333",

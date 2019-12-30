@@ -19,9 +19,9 @@ public class ParkingLotServiceStatusCommandTests extends BaseParkingLotServiceTe
     public void statusCommandTest() {
         Assertions.assertDoesNotThrow(() -> {
             String result = parkingLotService.executeCommand(Command.STATUS);
-            String expectedResult = "Slot No.      Registration number     Color\n" +
-                    "1             KA-01-BB-0001           White\n" +
-                    "2             KA-01-BB-0002           Black";
+            String expectedResult = "Slot No.    Registration No    Colour\n" +
+                    "1           KA-01-BB-0001      White\n" +
+                    "2           KA-01-BB-0002      Black";
             Assertions.assertEquals(expectedResult, result);
         });
     }

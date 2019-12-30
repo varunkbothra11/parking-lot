@@ -32,7 +32,7 @@ public class ParkingLotServiceIntegrationTests {
         Assertions.assertEquals(expectedResult.size(), actualResult.size());
 
         for (int i = 0; i < expectedResult.size(); ++i) {
-            Assertions.assertTrue(expectedResult.get(i).equalsIgnoreCase(actualResult.get(i)));
+            Assertions.assertEquals(expectedResult.get(i), actualResult.get(i));
         }
     }
 
@@ -55,12 +55,12 @@ public class ParkingLotServiceIntegrationTests {
                 new CommandModel(Command.PARK, new String[]{"KA-01-HH-2701", "Blue"}, "Allocated slot number: 5"),
                 new CommandModel(Command.PARK, new String[]{"KA-01-HH-3141", "Black"}, "Allocated slot number: 6"),
                 new CommandModel(Command.LEAVE, new String[]{"4"}, "Slot number 4 is free"),
-                new CommandModel(Command.STATUS, new String[]{}, "Slot No.      Registration number     Color\n" +
-                        "1             KA-01-HH-1234           White\n" +
-                        "2             KA-01-HH-9999           White\n" +
-                        "3             KA-01-BB-0001           Black\n" +
-                        "5             KA-01-HH-2701           Blue\n" +
-                        "6             KA-01-HH-3141           Black"),
+                new CommandModel(Command.STATUS, new String[]{}, "Slot No.    Registration No    Colour\n" +
+                        "1           KA-01-HH-1234      White\n" +
+                        "2           KA-01-HH-9999      White\n" +
+                        "3           KA-01-BB-0001      Black\n" +
+                        "5           KA-01-HH-2701      Blue\n" +
+                        "6           KA-01-HH-3141      Black"),
                 new CommandModel(Command.PARK, new String[]{"KA-01-P-333", "White"}, "Allocated slot number: 4"),
                 new CommandModel(Command.PARK, new String[]{"DL-12-AA-9999", "White"}, "Sorry, parking lot is full"),
                 new CommandModel(Command.REGISTRATION_NUMBERS_FOR_CARS_WITH_COLOUR, new String[]{"White"}, "KA-01-HH-1234, KA-01-HH-9999, KA-01-P-333"),
